@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="Umss">
+  <meta property="og:title" content="OmniSEP: Unified Omni-modal Sound Separation"/>
+  <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">    
+  
+  <title>OmniSEP</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+  <link rel="stylesheet" href="static/css/audio-table.css">
+  <link rel="stylesheet" type="text/css" href="static/css/dropdown_style.css">
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script src="static/js/bulma-carousel.min.js"></script>
+  <script src="static/js/bulma-slider.min.js"></script>
+  <script src="static/js/index.js"></script>
+</head>
+
+<body>
+
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+              <h1 id="co-speech-modalities" class="title is-1 publication-title">OmniSEP: Unified Omni-modal Sound Separation</h1>
+<!--               <h1 class="title is-1 publication-title"></h1> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+	  
+  <section class="section hero is-light">
+    <div class="container is-max-desktop">
+      <!-- Abstract. -->
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+            <h2 class="title is-3">Abstract</h2>
+            <div class="content has-text-justified">
+                <p>
+The scaling up has brought tremendous success in the fields of vision and language in recent years. When it comes to audio, however, researchers encounter a major challenge in scaling up the training data, as most natural audio contains diverse interfering signals. To address this limitation, we introduce \textbf{Omni}-modal Sound \textbf{Sep}aration (\textbf{OmniSep}), a novel framework capable of isolating clean soundtracks based on omni-modal queries, encompassing both single-modal and multi-modal composed queries. Specifically, we introduce the \texttt{Query-Mixup} strategy, which blends query features from different modalities during training. This enables OmniSep to optimize multiple modalities concurrently, effectively bringing all modalities under a unified framework for sound separation. We further enhance this flexibility by allowing queries to influence sound separation positively or negatively, facilitating the retention or removal of specific sounds as desired. Finally, OmniSep employs a retrieval-augmented approach known as \texttt{Query-Aug}, which enables open-vocabulary sound separation. Experimental evaluations on MUSIC, VGGSOUND-CLEAN+, and MUSIC-CLEAN+ datasets demonstrate effectiveness of OmniSep, achieving state-of-the-art performance in text-, image-, and audio-queried sound separation tasks.        </div>
+      </div>
+      <!--/ Abstract. -->
+    </div>
+  </section>
+
+    <!-- Table of Contents -->
+
+  <section class="hero">
+    <div class="hero-body">
+        <div class="container">
+          <h1 class="title is-3">OmniSEP</h1>
+            <h2><a href="#Main-Result">A.Sound Separation with Queries of Different Modalities.</a></h2>
+            <h4><a href="#text-query">A.1.Text-Query</a></h4>
+            <h4><a href="#image-query">A.2.Image-Query</a></h4>
+            <h4><a href="#audio-query">A.3.Audio-Query</a></h4>
+
+            <h2><a href="#Neg-Query">B.Sound Separation with Negative Queries.</a></h2>
+
+            <h2><a href="#Query-Aug">C.Sound Separation with Query-Aug.</a></h2>
+          </ul>
+        </div>
+    </div>
+  </section>
+
+
+  <section class="hero">
+      <div class="hero-body">
+          <div class="container">
+          <h1 id="Main-Result" class="title is-3">A.Sound Separation with Queries of Different Modalities.</h1>
+              <h4 id="text-query" class="title is-4">A.1.Text-Query</h4>
+              <div class="grid-container">
+                  <table >
+                      <tr >
+                        <th>Query</th>
+                        <th>Mixture</th>
+                        <th>Interference</th>
+                        <th>Target</th>
+                        <th>Prediction</th>
+
+                      </tr>
+
+                      <tr >
+                          <th rowspan="2" style="width: 300px; vertical-align:middle;">
+                              <img src="res/main_res/text_query/sample1/query.png" controls style="width: 300px; height: auto;">
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <img src="res/main_res/text_query/sample1/mix_mel.png" controls style="max-width: 100%; height: auto;">
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <img src="res/main_res/text_query/sample1/int_mel.png" controls style="max-width: 100%; height: auto;">
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <img src="res/main_res/text_query/sample1/gt_mel.png" controls style="max-width: 100%; height: auto;">
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <img src="res/main_res/text_query/sample1/pred_mel.png" controls style="max-width: 100%; height: auto;">
+                          </th>
+                      </tr>
+
+                      <tr >
+                          <th style="width: 300px; vertical-align:middle;">
+                              <audio controls style="width: 200px;"><source src="res/main_res/text_query/sample1/mix.wav"></audio>
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <audio controls style="width: 200px;"><source src="res/main_res/text_query/sample1/int.wav"></audio>
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <audio controls style="width: 200px;"><source src="res/main_res/text_query/sample1/gt.wav"></audio>
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <audio controls style="width: 200px;"><source src="res/main_res/text_query/sample1/pred.wav"></audio>
+                          </th>
+                      </tr>
+
+                      <tr >
+                          <th rowspan="2" style="width: 300px; vertical-align:middle;">
+                              <img src="res/main_res/text_query/sample2/query.png" controls style="width: 300px; height: auto;">
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <img src="res/main_res/text_query/sample2/mix_mel.png" controls style="max-width: 100%; height: auto;">
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <img src="res/main_res/text_query/sample2/int_mel.png" controls style="max-width: 100%; height: auto;">
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <img src="res/main_res/text_query/sample2/gt_mel.png" controls style="max-width: 100%; height: auto;">
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <img src="res/main_res/text_query/sample2/pred_mel.png" controls style="max-width: 100%; height: auto;">
+                          </th>
+                      </tr>
+
+                      <tr >
+                          <th style="width: 300px; vertical-align:middle;">
+                              <audio controls style="width: 200px;"><source src="res/main_res/text_query/sample2/mix.wav"></audio>
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <audio controls style="width: 200px;"><source src="res/main_res/text_query/sample2/int.wav"></audio>
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <audio controls style="width: 200px;"><source src="res/main_res/text_query/sample2/gt.wav"></audio>
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <audio controls style="width: 200px;"><source src="res/main_res/text_query/sample2/pred.wav"></audio>
+                          </th>
+                      </tr>
+
+
+                      <tr >
+                          <th rowspan="2" style="width: 300px; vertical-align:middle;">
+                              <img src="res/main_res/text_query/sample3/query.png" controls style="width: 300px; height: auto;">
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <img src="res/main_res/text_query/sample3/mix_mel.png" controls style="max-width: 100%; height: auto;">
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <img src="res/main_res/text_query/sample3/int_mel.png" controls style="max-width: 100%; height: auto;">
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <img src="res/main_res/text_query/sample3/gt_mel.png" controls style="max-width: 100%; height: auto;">
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <img src="res/main_res/text_query/sample3/pred_mel.png" controls style="max-width: 100%; height: auto;">
+                          </th>
+                      </tr>
+
+                      <tr >
+                          <th style="width: 300px; vertical-align:middle;">
+                              <audio controls style="width: 200px;"><source src="res/main_res/text_query/sample3/mix.wav"></audio>
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <audio controls style="width: 200px;"><source src="res/main_res/text_query/sample3/int.wav"></audio>
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <audio controls style="width: 200px;"><source src="res/main_res/text_query/sample3/gt.wav"></audio>
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <audio controls style="width: 200px;"><source src="res/main_res/text_query/sample3/pred.wav"></audio>
+                          </th>
+                      </tr>
+
+                  </table>
+              </div>
+              <br>
+              <h4 id="image-query" class="title is-4">A.2.Image-Query</h4>
+              <div class="grid-container">
+                  <table >
+                      <tr >
+                        <th>Query</th>
+                        <th>Mixture</th>
+                        <th>Interference</th>
+                        <th>Target</th>
+                        <th>Prediction</th>
+
+                      </tr>
+
+                      <tr >
+                          <th rowspan="2" style="width: 300px; vertical-align:middle;">
+                              <img src="res/main_res/image_query/sample1/query.png" controls style="width: 300px; height: auto;">
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <img src="res/main_res/image_query/sample1/mix_mel.png" controls style="max-width: 100%; height: auto;">
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <img src="res/main_res/image_query/sample1/int_mel.png" controls style="max-width: 100%; height: auto;">
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <img src="res/main_res/image_query/sample1/gt_mel.png" controls style="max-width: 100%; height: auto;">
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <img src="res/main_res/image_query/sample1/pred_mel.png" controls style="max-width: 100%; height: auto;">
+                          </th>
+                      </tr>
+
+                      <tr >
+                          <th style="width: 300px; vertical-align:middle;">
+                              <audio controls style="width: 200px;"><source src="res/main_res/image_query/sample1/mix.wav"></audio>
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <audio controls style="width: 200px;"><source src="res/main_res/image_query/sample1/int.wav"></audio>
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <audio controls style="width: 200px;"><source src="res/main_res/image_query/sample1/gt.wav"></audio>
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <audio controls style="width: 200px;"><source src="res/main_res/image_query/sample1/pred.wav"></audio>
+                          </th>
+                      </tr>
+
+                      <tr >
+                          <th rowspan="2" style="width: 300px; vertical-align:middle;">
+                              <img src="res/main_res/image_query/sample2/query.png" controls style="width: 300px;; height: auto;">
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <img src="res/main_res/image_query/sample2/mix_mel.png" controls style="max-width: 100%; height: auto;">
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <img src="res/main_res/image_query/sample2/int_mel.png" controls style="max-width: 100%; height: auto;">
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <img src="res/main_res/image_query/sample2/gt_mel.png" controls style="max-width: 100%; height: auto;">
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <img src="res/main_res/image_query/sample2/pred_mel.png" controls style="max-width: 100%; height: auto;">
+                          </th>
+                      </tr>
+
+                      <tr >
+                          <th style="width: 300px; vertical-align:middle;">
+                              <audio controls style="width: 200px;"><source src="res/main_res/image_query/sample2/mix.wav"></audio>
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <audio controls style="width: 200px;"><source src="res/main_res/image_query/sample2/int.wav"></audio>
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <audio controls style="width: 200px;"><source src="res/main_res/image_query/sample2/gt.wav"></audio>
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <audio controls style="width: 200px;"><source src="res/main_res/image_query/sample2/pred.wav"></audio>
+                          </th>
+                      </tr>
+
+                      <tr >
+                          <th rowspan="2" style="width: 300px; vertical-align:middle;">
+                              <img src="res/main_res/image_query/sample3/query.png" controls style="width: 300px;; height: auto;">
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <img src="res/main_res/image_query/sample3/mix_mel.png" controls style="max-width: 100%; height: auto;">
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <img src="res/main_res/image_query/sample3/int_mel.png" controls style="max-width: 100%; height: auto;">
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <img src="res/main_res/image_query/sample3/gt_mel.png" controls style="max-width: 100%; height: auto;">
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <img src="res/main_res/image_query/sample3/pred_mel.png" controls style="max-width: 100%; height: auto;">
+                          </th>
+                      </tr>
+
+                      <tr >
+                          <th style="width: 300px; vertical-align:middle;">
+                              <audio controls style="width: 200px;"><source src="res/main_res/image_query/sample3/mix.wav"></audio>
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <audio controls style="width: 200px;"><source src="res/main_res/image_query/sample3/int.wav"></audio>
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <audio controls style="width: 200px;"><source src="res/main_res/image_query/sample3/gt.wav"></audio>
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <audio controls style="width: 200px;"><source src="res/main_res/image_query/sample3/pred.wav"></audio>
+                          </th>
+                      </tr>
+                  </table>
+              </div>
+              <br>
+              <h4 id="audio-query" class="title is-4">A.3.Audio-Query</h4>
+              <div class="grid-container">
+                  <table >
+                      <tr >
+                        <th>Query</th>
+                        <th>Mixture</th>
+                        <th>Interference</th>
+                        <th>Target</th>
+                        <th>Prediction</th>
+
+                      </tr>
+
+                      <tr >
+                          <th style="width: 300px; vertical-align:middle;">
+                              <img src="res/main_res/audio_query/sample1/query.png" controls style="max-width: 100%; height: auto;">
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <img src="res/main_res/audio_query/sample1/mix_mel.png" controls style="max-width: 100%; height: auto;">
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <img src="res/main_res/audio_query/sample1/int_mel.png" controls style="max-width: 100%; height: auto;">
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <img src="res/main_res/audio_query/sample1/gt_mel.png" controls style="max-width: 100%; height: auto;">
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <img src="res/main_res/audio_query/sample1/pred_mel.png" controls style="max-width: 100%; height: auto;">
+                          </th>
+                      </tr>
+
+                      <tr >
+                          <th style="width: 300px; vertical-align:middle;">
+                              <audio controls style="width: 200px;"><source src="res/main_res/audio_query/sample1/query.wav"></audio>
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <audio controls style="width: 200px;"><source src="res/main_res/audio_query/sample1/mix.wav"></audio>
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <audio controls style="width: 200px;"><source src="res/main_res/audio_query/sample1/int.wav"></audio>
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <audio controls style="width: 200px;"><source src="res/main_res/audio_query/sample1/gt.wav"></audio>
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <audio controls style="width: 200px;"><source src="res/main_res/audio_query/sample1/pred.wav"></audio>
+                          </th>
+                      </tr>
+
+                      <tr >
+                          <th style="width: 300px; vertical-align:middle;">
+                              <img src="res/main_res/audio_query/sample2/query.png" controls style="max-width: 100%; height: auto;">
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <img src="res/main_res/audio_query/sample2/mix_mel.png" controls style="max-width: 100%; height: auto;">
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <img src="res/main_res/audio_query/sample2/int_mel.png" controls style="max-width: 100%; height: auto;">
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <img src="res/main_res/audio_query/sample2/gt_mel.png" controls style="max-width: 100%; height: auto;">
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <img src="res/main_res/audio_query/sample2/pred_mel.png" controls style="max-width: 100%; height: auto;">
+                          </th>
+                      </tr>
+
+                      <tr >
+                          <th style="width: 300px; vertical-align:middle;">
+                              <audio controls style="width: 200px;"><source src="res/main_res/audio_query/sample2/query.wav"></audio>
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <audio controls style="width: 200px;"><source src="res/main_res/audio_query/sample2/mix.wav"></audio>
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <audio controls style="width: 200px;"><source src="res/main_res/audio_query/sample2/int.wav"></audio>
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <audio controls style="width: 200px;"><source src="res/main_res/audio_query/sample2/gt.wav"></audio>
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <audio controls style="width: 200px;"><source src="res/main_res/audio_query/sample2/pred.wav"></audio>
+                          </th>
+                      </tr>
+
+                      <tr >
+                          <th style="width: 300px; vertical-align:middle;">
+                              <img src="res/main_res/audio_query/sample3/query.png" controls style="max-width: 100%; height: auto;">
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <img src="res/main_res/audio_query/sample3/mix_mel.png" controls style="max-width: 100%; height: auto;">
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <img src="res/main_res/audio_query/sample3/int_mel.png" controls style="max-width: 100%; height: auto;">
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <img src="res/main_res/audio_query/sample3/gt_mel.png" controls style="max-width: 100%; height: auto;">
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <img src="res/main_res/audio_query/sample3/pred_mel.png" controls style="max-width: 100%; height: auto;">
+                          </th>
+                      </tr>
+
+                      <tr >
+                          <th style="width: 300px; vertical-align:middle;">
+                              <audio controls style="width: 200px;"><source src="res/main_res/audio_query/sample3/query.wav"></audio>
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <audio controls style="width: 200px;"><source src="res/main_res/audio_query/sample3/mix.wav"></audio>
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <audio controls style="width: 200px;"><source src="res/main_res/audio_query/sample3/int.wav"></audio>
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <audio controls style="width: 200px;"><source src="res/main_res/audio_query/sample3/gt.wav"></audio>
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <audio controls style="width: 200px;"><source src="res/main_res/audio_query/sample3/pred.wav"></audio>
+                          </th>
+                      </tr>
+                  </table>
+              </div>
+          <br>
+          <h1 id="Neg-Query" class="title is-3">B.Sound Separation with Negative Queries.</h1>
+              <div class="grid-container">
+                  <table >
+                      <tr >
+                        <th>Mixture</th>
+                        <th>Interference</th>
+                        <th>Target</th>
+                        <th>OmniSEP</th>
+                        <th>OmniSEP+Neg</th>
+
+                      </tr>
+
+                      <tr >
+                          <th style="width: 300px; vertical-align:middle;">
+                              <img src="res/neg_query/text_query/sample1/mix_mel.png" controls style="max-width: 100%; height: auto;">
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <img src="res/neg_query/text_query/sample1/int_mel.png" controls style="max-width: 100%; height: auto;">
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <img src="res/neg_query/text_query/sample1/gt_mel.png" controls style="max-width: 100%; height: auto;">
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <img src="res/neg_query/text_query/sample1/UMSS_mel.png" controls style="max-width: 100%; height: auto;">
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <img src="res/neg_query/text_query/sample1/UMSS+Neg_mel.png" controls style="max-width: 100%; height: auto;">
+                          </th>
+                      </tr>
+
+                      <tr >
+                          <th style="width: 300px; vertical-align:middle;">
+                              <audio controls style="width: 200px;"><source src="res/neg_query/text_query/sample1/mix.wav"></audio>
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <audio controls style="width: 200px;"><source src="res/neg_query/text_query/sample1/int.wav"></audio>
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <audio controls style="width: 200px;"><source src="res/neg_query/text_query/sample1/gt.wav"></audio>
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <audio controls style="width: 200px;"><source src="res/neg_query/text_query/sample1/UMSS.wav"></audio>
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <audio controls style="width: 200px;"><source src="res/neg_query/text_query/sample1/UMSS+Neg.wav"></audio>
+                          </th>
+                      </tr>
+
+
+                      <tr >
+                          <th style="width: 300px; vertical-align:middle;">
+                              <img src="res/neg_query/text_query/sample2/mix_mel.png" controls style="max-width: 100%; height: auto;">
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <img src="res/neg_query/text_query/sample2/int_mel.png" controls style="max-width: 100%; height: auto;">
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <img src="res/neg_query/text_query/sample2/gt_mel.png" controls style="max-width: 100%; height: auto;">
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <img src="res/neg_query/text_query/sample2/UMSS_mel.png" controls style="max-width: 100%; height: auto;">
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <img src="res/neg_query/text_query/sample2/UMSS+Neg_mel.png" controls style="max-width: 100%; height: auto;">
+                          </th>
+                      </tr>
+
+                      <tr >
+                          <th style="width: 300px; vertical-align:middle;">
+                              <audio controls style="width: 200px;"><source src="res/neg_query/text_query/sample2/mix.wav"></audio>
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <audio controls style="width: 200px;"><source src="res/neg_query/text_query/sample2/int.wav"></audio>
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <audio controls style="width: 200px;"><source src="res/neg_query/text_query/sample2/gt.wav"></audio>
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <audio controls style="width: 200px;"><source src="res/neg_query/text_query/sample2/UMSS.wav"></audio>
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <audio controls style="width: 200px;"><source src="res/neg_query/text_query/sample2/UMSS+Neg.wav"></audio>
+                          </th>
+                      </tr>
+
+
+                      <tr >
+                          <th style="width: 300px; vertical-align:middle;">
+                              <img src="res/neg_query/text_query/sample3/mix_mel.png" controls style="max-width: 100%; height: auto;">
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <img src="res/neg_query/text_query/sample3/int_mel.png" controls style="max-width: 100%; height: auto;">
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <img src="res/neg_query/text_query/sample3/gt_mel.png" controls style="max-width: 100%; height: auto;">
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <img src="res/neg_query/text_query/sample3/UMSS_mel.png" controls style="max-width: 100%; height: auto;">
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <img src="res/neg_query/text_query/sample3/UMSS+Neg_mel.png" controls style="max-width: 100%; height: auto;">
+                          </th>
+                      </tr>
+
+                      <tr >
+                          <th style="width: 300px; vertical-align:middle;">
+                              <audio controls style="width: 200px;"><source src="res/neg_query/text_query/sample3/mix.wav"></audio>
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <audio controls style="width: 200px;"><source src="res/neg_query/text_query/sample3/int.wav"></audio>
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <audio controls style="width: 200px;"><source src="res/neg_query/text_query/sample3/gt.wav"></audio>
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <audio controls style="width: 200px;"><source src="res/neg_query/text_query/sample3/UMSS.wav"></audio>
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <audio controls style="width: 200px;"><source src="res/neg_query/text_query/sample3/UMSS+Neg.wav"></audio>
+                          </th>
+                      </tr>
+
+                  </table>
+              </div>
+          <br>
+          <h1 id="Query-Aug" class="title is-3">C.Sound Separation with Query-Aug.</h1>
+              <div class="grid-container">
+                  <table >
+                      <tr >
+                        <th>Query</th>
+                        <th>Mixture</th>
+                        <th>Target</th>
+                        <th>OmniSEP</th>
+                        <th>OmniSEP+Query-Aug</th>
+
+                      </tr>
+
+                      <tr >
+                          <th rowspan="2" style="width: 300px; vertical-align:middle;">
+                              <img src="res/query_aug/text_query/sample1/query.png" controls style="max-width: 100%; height: auto;">
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <img src="res/query_aug/text_query/sample1/mix_mel.png" controls style="max-width: 100%; height: auto;">
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <img src="res/query_aug/text_query/sample1/gt_mel.png" controls style="max-width: 100%; height: auto;">
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <img src="res/query_aug/text_query/sample1/UMSS_mel.png" controls style="max-width: 100%; height: auto;">
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <img src="res/query_aug/text_query/sample1/UMSS+aug_mel.png" controls style="max-width: 100%; height: auto;">
+                          </th>
+                      </tr>
+
+                      <tr >
+                          <th style="width: 300px; vertical-align:middle;">
+                              <audio controls style="width: 200px;"><source src="res/query_aug/text_query/sample1/mix.wav"></audio>
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <audio controls style="width: 200px;"><source src="res/query_aug/text_query/sample1/gt.wav"></audio>
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <audio controls style="width: 200px;"><source src="res/query_aug/text_query/sample1/UMSS.wav"></audio>
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <audio controls style="width: 200px;"><source src="res/query_aug/text_query/sample1/UMSS+aug.wav"></audio>
+                          </th>
+                      </tr>
+
+
+                      <tr >
+                          <th rowspan="2" style="width: 300px; vertical-align:middle;">
+                              <img src="res/query_aug/text_query/sample2/query.png" controls style="max-width: 100%; height: auto;">
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <img src="res/query_aug/text_query/sample2/mix_mel.png" controls style="max-width: 100%; height: auto;">
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <img src="res/query_aug/text_query/sample2/gt_mel.png" controls style="max-width: 100%; height: auto;">
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <img src="res/query_aug/text_query/sample2/UMSS_mel.png" controls style="max-width: 100%; height: auto;">
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <img src="res/query_aug/text_query/sample2/UMSS+aug_mel.png" controls style="max-width: 100%; height: auto;">
+                          </th>
+                      </tr>
+
+                      <tr >
+                          <th style="width: 300px; vertical-align:middle;">
+                              <audio controls style="width: 200px;"><source src="res/query_aug/text_query/sample2/mix.wav"></audio>
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <audio controls style="width: 200px;"><source src="res/query_aug/text_query/sample2/gt.wav"></audio>
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <audio controls style="width: 200px;"><source src="res/query_aug/text_query/sample2/UMSS.wav"></audio>
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <audio controls style="width: 200px;"><source src="res/query_aug/text_query/sample2/UMSS+aug.wav"></audio>
+                          </th>
+                      </tr>
+
+
+                  </table>
+              </div>
+
+          <br>
+          <h1 id="AudioSep" class="title is-3">D.AudioSep with Query-Aug.</h1>
+              <tr>
+                  <span style="color: red;">* The AudioSep model referenced in this section is the official open-source version, trained on the audio datasets of over 14,000 hours.</span>
+              </tr>
+              <div class="grid-container">
+                  <table >
+                      <tr >
+                        <th>Query</th>
+                        <th>Mixture</th>
+                        <th>Target</th>
+                        <th>AudioSep</th>
+                        <th>AudioSep+Query-Aug</th>
+
+                      </tr>
+
+                      <tr >
+                          <th rowspan="2" style="width: 300px; vertical-align:middle;">
+                              <img src="res/query_aug/text_query/sample1/query.png" controls style="max-width: 100%; height: auto;">
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <img src="res/audiosep/sample1/mix_mel.png" controls style="max-width: 100%; height: auto;">
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <img src="res/audiosep/sample1/gt_mel.png" controls style="max-width: 100%; height: auto;">
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <img src="res/audiosep/sample1/AudioSep.png" controls style="max-width: 100%; height: auto;">
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <img src="res/audiosep/sample1/AudioSep_aug.png" controls style="max-width: 100%; height: auto;">
+                          </th>
+                      </tr>
+
+                      <tr >
+                          <th style="width: 300px; vertical-align:middle;">
+                              <audio controls style="width: 200px;"><source src="res/audiosep/sample1/mix.wav"></audio>
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <audio controls style="width: 200px;"><source src="res/audiosep/sample1/gt.wav"></audio>
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <audio controls style="width: 200px;"><source src="res/audiosep/sample1/audiosep.wav"></audio>
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <audio controls style="width: 200px;"><source src="res/audiosep/sample1/audiosep_aug.wav"></audio>
+                          </th>
+                      </tr>
+
+
+                      <tr >
+                          <th rowspan="2" style="width: 300px; vertical-align:middle;">
+                              <img src="res/audiosep/sample2/query.png" controls style="max-width: 100%; height: auto;">
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <img src="res/audiosep/sample2/mix_mel.png" controls style="max-width: 100%; height: auto;">
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <img src="res/audiosep/sample2/gt_mel.png" controls style="max-width: 100%; height: auto;">
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <img src="res/audiosep/sample2/audiosep_mel.png" controls style="max-width: 100%; height: auto;">
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <img src="res/audiosep/sample2/audiosep_aug_mel.png" controls style="max-width: 100%; height: auto;">
+                          </th>
+                      </tr>
+
+                      <tr >
+                          <th style="width: 300px; vertical-align:middle;">
+                              <audio controls style="width: 200px;"><source src="res/audiosep/sample2/mix.wav"></audio>
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <audio controls style="width: 200px;"><source src="res/audiosep/sample2/gt.wav"></audio>
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <audio controls style="width: 200px;"><source src="res/audiosep/sample2/audiosep.wav"></audio>
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <audio controls style="width: 200px;"><source src="res/audiosep/sample2/audiosep_aug.wav"></audio>
+                          </th>
+                      </tr>
+
+
+                  </table>
+              </div>
+          <br>
+          <h1 id="Real" class="title is-3">E.Sound Separation on Real Videos.</h1>
+              <tr>
+                  <span style="color: red;">* All real video samples in this section are from the Paris Olympic Games.</span>
+              </tr>
+              <tr>
+                <span style="color: red;">* Click on the label to view the query content.</span>
+              </tr>
+
+              <div class="grid-container">
+                  <table >
+                      <tr >
+                        <th></th>
+                        <th>original video</th>
+                        <th>
+                            <a href="/res/real/sample1/image.jpg" style="text-decoration: underline;">
+                                Image
+                            </a>
+                        </th>
+                        <th>
+                            <a href="/res/real/sample1/image.jpg" style="text-decoration: underline;">
+                                Image
+                            </a>
+                            +
+                            <a href="/res/real/sample1/6kXUG1Zo6VA_000000.wav" style="text-decoration: underline;">
+                                Audio
+                            </a>
+                        </th>
+
+                      </tr>
+
+
+                      <tr >
+                          <th style="width: 100px; vertical-align:middle;">
+                              Sample1
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <video controls style="width: 300px;"><source src="res/real/sample1/skateboarding.mp4"></video>
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <video controls style="width: 300px;"><source src="res/real/sample1/1_iqss.mp4"></video>
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <video controls style="width: 300px;"><source src="res/real/sample1/2_aqss.mp4"></video>
+                          </th>
+                      </tr>
+                  </table>
+              </div>
+              <br>
+              <div class="grid-container">
+                  <table >
+                      <tr >
+                        <th></th>
+                        <th>original video</th>
+                        <th>
+                            <a href="/res/real/sample2/skateboarding.png" style="text-decoration: underline;">
+                                Text
+                            </a>
+                        </th>
+                        <th>
+                            <a href="/res/real/sample2/skateboarding.png" style="text-decoration: underline;">
+                                Text
+                            </a> -
+                            <a href="/res/real/sample2/perple_cheering.png" style="text-decoration: underline; color: red;">
+                                <span style="color: red;">Text (negative)</span>
+                            </a>
+                        </th>
+
+                      </tr>
+
+
+                      <tr >
+                          <th style="width: 100px; vertical-align:middle;">
+                              Sample2
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <video controls style="width: 300px;"><source src="res/real/sample3/skateboarding.mp4"></video>
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <video controls style="width: 300px;"><source src="res/real/sample3/tqss.mp4"></video>
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <video controls style="width: 300px;"><source src="res/real/sample3/2_neg.mp4"></video>
+                          </th>
+                      </tr>
+                  </table>
+              </div>
+              <br>
+
+              <div class="grid-container">
+                  <table >
+                      <tr >
+                        <th></th>
+                        <th>original video</th>
+                        <th>
+                            <a href="/res/real/sample3/man.png" style="text-decoration: underline;">
+                                Text
+                            </a>
+                        </th>
+                        <th>
+                            <a href="/res/real/sample3/man.png" style="text-decoration: underline;">
+                                Text
+                            </a>
+                              -
+                            <a href="/res/real/sample3/eOwKvuuMl74_000070.wav" style="text-decoration: underline; color: red;" onclick="sample3()">
+                                <span style="color: red;">Audio (negative)</span>
+                            </a>
+
+                        </th>
+
+                      </tr>
+
+
+                      <tr >
+                          <th style="width: 100px; vertical-align:middle;">
+                              Sample3
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <video controls style="width: 300px;"><source src="res/real/sample2/ocean.mp4"></video>
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <video controls style="width: 300px;"><source src="res/real/sample2/1_tqss.mp4"></video>
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <video controls style="width: 300px;"><source src="res/real/sample2/2_neg.mp4"></video>
+                          </th>
+                      </tr>
+                  </table>
+              </div>
+
+          <br>
+          <h1 id="AudioSep and Negative query" class="title is-3">F. More Examples on Negative-Query.</h1>
+
+              <div class="grid-container">
+                  <table >
+                      <tr >
+                        <th></th>
+                        <th>original video</th>
+                        <th>
+                            AudioSep(<a href="/res/real/sample3/man.png" style="text-decoration: underline;">
+                                Text
+                            </a>)
+                        </th>
+                        <th>
+                            OmniSep(<a href="/res/real/sample3/man.png" style="text-decoration: underline;">
+                                Text
+                            </a>)
+                        </th>
+                        <th>
+                            OmniSep(<a href="/res/real/sample3/man.png" style="text-decoration: underline;">
+                                Text
+                            </a>)+<a href="/res/real/sample3/eOwKvuuMl74_000070.mp3" style="text-decoration: underline; color: red;" onclick="sample3()">
+                                <span style="color: red;">Audio (negative)</span>
+                            </a>
+                        </th>
+
+                      </tr>
+
+
+                      <tr >
+                          <th style="width: 100px; vertical-align:middle;">
+                              Sample1
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <video controls style="width: 300px;"><source src="res/real/sample2/ocean.mp4"></video>
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <video controls style="width: 300px;"><source src="res/real/sample2/audiosep_man_speaking.mp4"></video>
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <video controls style="width: 300px;"><source src="res/real/sample2/1_tqss.mp4"></video>
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <video controls style="width: 300px;"><source src="res/real/sample2/2_neg.mp4"></video>
+                          </th>
+                      </tr>
+                  </table>
+              </div>
+
+              <div class="grid-container">
+                  <table >
+                      <tr >
+                        <th></th>
+                        <th>original video</th>
+                        <th>
+                            CLIPSEP(<a href="/res/real/sample4/frames.png" style="text-decoration: underline;">
+                                Image
+                            </a>)
+                        </th>
+                        <th>
+                            OmniSep(<a href="/res/real/sample4/frames.png" style="text-decoration: underline;">
+                                Image
+                            </a>)
+                        </th>
+                        <th>
+                            OmniSep(<a href="/res/real/sample4/frames.png" style="text-decoration: underline;">
+                                Image
+                            </a>)+<a href="/res/real/sample4/NVV7NcaQ2zs_000100.mp3" style="text-decoration: underline;">
+                                <span style="color: red;">Audio (negative)</span>
+                            </a>
+                        </th>
+
+                      </tr>
+
+
+                      <tr >
+                          <th style="width: 100px; vertical-align:middle;">
+                              Sample2
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <video controls style="width: 300px;"><source src="res/real/sample4/ori.mp4"></video>
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <video controls style="width: 300px;"><source src="res/real/sample4/clipsep.mp4"></video>
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <video controls style="width: 300px;"><source src="res/real/sample4/OmniSep.mp4"></video>
+                          </th>
+                          <th style="width: 300px; vertical-align:middle;">
+                              <video controls style="width: 300px;"><source src="res/real/sample4/omnisep_neg.mp4"></video>
+                          </th>
+                      </tr>
+                  </table>
+              </div>
+          </div>
+      </div>
+
+
+  </section>
+</body>
+
+
