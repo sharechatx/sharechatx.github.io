@@ -164,10 +164,18 @@ body {
     margin-bottom: 20px; /* Add space between chat sections */
 }
 
-.audio-container {
+.audio-container_left {
+    width: 70%; /* 占据父容器的70% */
+    float: left;
     display: flex;
     flex-direction: column; /* Stack audio and text vertically */
-    width: 70%; /* Audio and text take 70% of the container */
+}
+
+.audio-container_left {
+    width: 70%; /* 占据父容器的70% */
+    float: right;
+    display: flex;
+    flex-direction: column; /* Stack audio and text vertically */
 }
 
 .audio-player {
@@ -193,9 +201,6 @@ body {
     width: 100%; /* Full width for text */
 }
 
-/* New class for right-aligned audio-container */
-.right-aligned {
-    margin-left: auto; /* Push the container to the right */
-}
+
 
 
