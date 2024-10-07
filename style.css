@@ -157,15 +157,21 @@ body {
     width: 100%; /* Full width of the parent container */
     margin-bottom: 20px; /* Space between each chat section */
 }
+.chat-section {
+    display: flex;
+    flex-direction: column; /* Stack audio and text vertically */
+    width: 100%; /* Ensure chat section takes up full width */
+    margin-bottom: 20px; /* Add space between chat sections */
+}
 
 .audio-container {
     display: flex;
-    flex-direction: column; /* Ensure audio and text are vertically aligned */
-    width: 70%; /* Audio and text will take 70% of the container */
+    flex-direction: column; /* Stack audio and text vertically */
+    width: 70%; /* Audio and text take 70% of the container */
 }
 
 .audio-player {
-    width: 100%; /* Make audio player take 100% of the audio container */
+    width: 100%; /* Ensure the audio player takes full width of the container */
     margin-bottom: 10px; /* Add spacing below the audio player */
 }
 
@@ -175,7 +181,7 @@ body {
     border: 2px solid lightblue; /* Light blue border */
     border-radius: 10px; /* Rounded corners */
     padding: 10px; /* Inner spacing */
-    width: 100%; /* Ensure the text block takes full width of the container */
+    width: 100%; /* Full width for text */
 }
 
 .human_right {
@@ -184,6 +190,12 @@ body {
     border: 2px solid orange; /* Orange border */
     border-radius: 10px; /* Rounded corners */
     padding: 10px; /* Inner spacing */
-    width: 100%; /* Ensure the text block takes full width of the container */
+    width: 100%; /* Full width for text */
 }
+
+/* New class for right-aligned audio-container */
+.right-aligned {
+    margin-left: auto; /* Push the container to the right */
+}
+
 
