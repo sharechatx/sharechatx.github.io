@@ -66,7 +66,182 @@ With the rapid development of large language models, researchers have created in
   <section class="hero">
     <div class="hero-body">
         <div class="container">
-          <h1 class="title is-3">OmniSEP</h1>
+          <h1 class="title is-3">OmniChat</h1>
+            <h2><a href="#Main-Result">A.Sound Separation with Queries of Different Modalities.</a></h2>
+            <h4><a href="#text-query">A.1.Text-Query</a></h4>
+            <h4><a href="#image-query">A.2.Image-Query</a></h4>
+            <h4><a href="#audio-query">A.3.Audio-Query</a></h4>
+
+            <h2><a href="#Neg-Query">B.Sound Separation with Negative Queries.</a></h2>
+
+            <h2><a href="#Query-Aug">C.Sound Separation with Query-Aug.</a></h2>
+          </ul>
+        </div>
+    </div>
+  </section>
+
+
+  <section class="hero">
+      <div class="hero-body">
+          <div class="container">
+          <h1 id="Main-Result" class="title is-3">A.Sound Separation with Queries of Different Modalities.</h1>
+          <!-- Insert new chat section here -->
+          <div class="container">
+              <div class="columns is-centered">
+                  <div class="column">
+                      <div class="chat-box">
+                          <div class="chat-section">
+                              <audio controls>
+                                  <source src="audio1.mp3" type="audio/mpeg">
+                                  Your browser does not support the audio element.
+                              </audio>
+                              <div class="human">Can you believe how peaceful it is here? The birds sound so lovely!</div>
+                          </div>
+                          <div class="chat-section">
+                              <div class="bot">Yeah, it definitely has a certain charm.</div>
+                          </div>
+
+                          <div class="chat-section">
+                              <audio controls>
+                                  <source src="audio2.mp3" type="audio/mpeg">
+                                  Your browser does not support the audio element.
+                              </audio>
+                              <div class="human">I didn't expect to see so many birds together, it's like they're having a party!</div>
+                          </div>
+                          <div class="chat-section">
+                              <div class="bot">It really feels like a joyful gathering, doesn't it?</div>
+                          </div>
+
+                          <div class="chat-section">
+                              <audio controls>
+                                  <source src="audio3.mp3" type="audio/mpeg">
+                                  Your browser does not support the audio element.
+                              </audio>
+                              <div class="human">And they all seem to get along with each other nicely.</div>
+                          </div>
+                          <div class="history">
+                              <div class="bot">Yeah, it sounds like they are peacefully eating together, right?</div>
+                              <div class="bot">Isn't it amazing how they coexist so peacefully?</div>
+                              <div class="bot">Yes, the birds seem to be enjoying each other's company.</div>
+                          </div>
+                      </div>
+
+                      <div class="chat-box">
+                          <div class="chat-section">
+                              <audio controls>
+                                  <source src="audio4.mp3" type="audio/mpeg">
+                                  Your browser does not support the audio element.
+                              </audio>
+                              <div class="human">Have you heard that new track with the male vocalist?</div>
+                          </div>
+                          <div class="chat-section">
+                              <div class="bot">Yes! I love the way the slow tempo really sets a nostalgic tone.</div>
+                          </div>
+
+                          <div class="chat-section">
+                              <audio controls>
+                                  <source src="audio5.mp3" type="audio/mpeg">
+                                  Your browser does not support the audio element.
+                              </audio>
+                              <div class="human">The lyrics are quite insightful, aren't they? They really stick with you.</div>
+                          </div>
+                          <div class="chat-section">
+                              <div class="bot">Totally! It has this blend of soft yellow sad energy but with an electric guitar lead that's exotic.</div>
+                          </div>
+
+                          <div class="chat-section">
+                              <audio controls>
+                                  <source src="audio6.mp3" type="audio/mpeg">
+                                  Your browser does not support the audio element.
+                              </audio>
+                              <div class="human">The overall mood seems a bit melancholic, doesn't it?</div>
+                          </div>
+                          <div class="history">
+                              <div class="bot">Yeah, it definitely has that melancholic vibe, but it's also quite soothing.</div>
+                              <div class="bot">Yeah, there's a touch of melancholy that makes you reflect on past experiences.</div>
+                              <div class="bot">It feels uplifting in its own unique way.</div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </section>
+</body>
+</html>
+
+
+
+
+<!-- <!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="Umss">
+  <meta property="og:title" content="OmniChat: Enhancing Spoken Dialogue Systems with Scalable Synthetic Data for Diverse Scenarios"/>
+  <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">    
+  
+  <title>OmniChat</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+  <link rel="stylesheet" href="static/css/audio-table.css">
+  <link rel="stylesheet" type="text/css" href="static/css/dropdown_style.css">
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script src="static/js/bulma-carousel.min.js"></script>
+  <script src="static/js/bulma-slider.min.js"></script>
+  <script src="static/js/index.js"></script>
+</head>
+
+<body>
+
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+              <h1 id="co-speech-modalities" class="title is-1 publication-title">OmniChat: Enhancing Spoken Dialogue Systems with Scalable Synthetic Data for Diverse Scenarios</h1>
+<!--               <h1 class="title is-1 publication-title"></h1> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+	  
+  <section class="section hero is-light">
+    <div class="container is-max-desktop">
+      <!-- Abstract. -->
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+            <h2 class="title is-3">Abstract</h2>
+            <div class="content has-text-justified">
+                <p>
+With the rapid development of large language models, researchers have created increasingly advanced spoken dialogue systems that can naturally converse with humans. However, these systems still struggle to handle the full complexity of real-world conversations, including audio events, musical contexts, and emotional expressions, mainly because current dialogue datasets are constrained in both scale and scenario diversity. In this paper, we propose leveraging synthetic data to enhance the dialogue models across diverse scenarios. We introduce ShareChatX, the first comprehensive, large-scale dataset for spoken dialogue that spans diverse scenarios. Based on this dataset, we introduce OmniChat, a multi-turn dialogue system with a heterogeneous feature fusion module, designed to optimize feature selection in different dialogue contexts. In addition, we explored critical aspects of training dialogue systems using synthetic data. Through comprehensive experimentation, we determined the ideal balance between synthetic and real data, achieving state-of-the-art results on the real-world dialogue dataset DailyTalk. We also highlight the crucial importance of synthetic data in tackling diverse, complex dialogue scenarios, especially those involving audio and music.
+	    </div>
+      </div>
+      <!--/ Abstract. -->
+    </div>
+  </section>
+
+    <!-- Table of Contents -->
+
+  <section class="hero">
+    <div class="hero-body">
+        <div class="container">
+          <h1 class="title is-3">OmniChat</h1>
             <h2><a href="#Main-Result">A.Sound Separation with Queries of Different Modalities.</a></h2>
             <h4><a href="#text-query">A.1.Text-Query</a></h4>
             <h4><a href="#image-query">A.2.Image-Query</a></h4>
@@ -961,3 +1136,7 @@ With the rapid development of large language models, researchers have created in
 </body>
 
 
+ -->
+
+
+ 
