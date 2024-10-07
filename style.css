@@ -153,13 +153,14 @@ body {
 
 .audio-container {
     display: flex;
-    align-items: center; /* Vertically center the audio player and text */
+    flex-direction: column; /* Stack the audio player and text vertically */
+    align-items: stretch; /* Make sure both audio player and text take the full width */
+    width: 100%; /* Ensure the container takes up the full width */
 }
 
 .audio-player {
-    flex: 1; /* Allow the audio player to grow to fill available space */
-    margin-right: 10px; /* Space between audio player and text */
-    height: 100%;
+    width: 60%; /* Make the audio player take full width of the container */
+    margin-bottom: 10px; /* Add some space between the audio player and the text */
 }
 
 .human_left {
