@@ -164,5 +164,5 @@ body {
 .human {
     text-align: right; /* Right-align the text */
     flex: none; /* Prevent text from growing */
-    width: 100%; /* Ensure it takes the full width */
+    width: 80%; /* Ensure it takes the full width */
 }
