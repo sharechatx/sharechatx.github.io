@@ -150,36 +150,40 @@ body {
      padding: 0 !important;
      margin: 0 !important;
   }
+.chat-section {
+    display: flex;
+    flex-direction: column; /* Stack audio and text vertically */
+    align-items: center; /* Center the content horizontally */
+    width: 100%; /* Full width of the parent container */
+    margin-bottom: 20px; /* Space between each chat section */
+}
 
 .audio-container {
     display: flex;
-    flex-direction: column; /* Stack the audio player and text vertically */
-    align-items: stretch; /* Make sure both audio player and text take the full width */
-    width: 100%; /* Ensure the container takes up the full width */
+    flex-direction: column; /* Ensure audio and text are vertically aligned */
+    width: 70%; /* Audio and text will take 70% of the container */
 }
 
 .audio-player {
-    width: 60%; /* Make the audio player take full width of the container */
-    margin-bottom: 10px; /* Add some space between the audio player and the text */
+    width: 100%; /* Make audio player take 100% of the audio container */
+    margin-bottom: 10px; /* Add spacing below the audio player */
 }
 
 .human_left {
     text-align: left; /* Left-align the text */
-    flex: none; /* Prevent text from growing */
-    width: 70%; /* Ensure it takes the full width */
     background-color: rgba(173, 216, 230, 0.5); /* Light blue background */
     border: 2px solid lightblue; /* Light blue border */
     border-radius: 10px; /* Rounded corners */
     padding: 10px; /* Inner spacing */
+    width: 100%; /* Ensure the text block takes full width of the container */
 }
 
 .human_right {
     text-align: right; /* Right-align the text */
-    flex: none; /* Prevent text from growing */
-    width: 70%; /* Ensure it takes the full width */
     background-color: rgba(255, 165, 0, 0.5); /* Light orange background */
     border: 2px solid orange; /* Orange border */
     border-radius: 10px; /* Rounded corners */
     padding: 10px; /* Inner spacing */
+    width: 100%; /* Ensure the text block takes full width of the container */
 }
 
