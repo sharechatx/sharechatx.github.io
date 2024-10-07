@@ -150,3 +150,19 @@ body {
      padding: 0 !important;
      margin: 0 !important;
   }
+
+.audio-container {
+    display: flex;
+    align-items: center; /* Vertically center the audio player and text */
+}
+
+.audio-player {
+    flex: 1; /* Allow the audio player to grow to fill available space */
+    margin-right: 10px; /* Space between audio player and text */
+}
+
+.human {
+    text-align: right; /* Right-align the text */
+    flex: none; /* Prevent text from growing */
+    width: 100%; /* Ensure it takes the full width */
+}
