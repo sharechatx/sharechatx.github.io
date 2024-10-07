@@ -159,12 +159,13 @@ body {
 .audio-player {
     flex: 1; /* Allow the audio player to grow to fill available space */
     margin-right: 10px; /* Space between audio player and text */
+    height: 100%;
 }
 
 .human_left {
     text-align: left; /* Left-align the text */
     flex: none; /* Prevent text from growing */
-    width: 80%; /* Ensure it takes the full width */
+    width: 70%; /* Ensure it takes the full width */
     background-color: rgba(173, 216, 230, 0.5); /* Light blue background */
     border: 2px solid lightblue; /* Light blue border */
     border-radius: 10px; /* Rounded corners */
@@ -174,7 +175,7 @@ body {
 .human_right {
     text-align: right; /* Right-align the text */
     flex: none; /* Prevent text from growing */
-    width: 80%; /* Ensure it takes the full width */
+    width: 70%; /* Ensure it takes the full width */
     background-color: rgba(255, 165, 0, 0.5); /* Light orange background */
     border: 2px solid orange; /* Orange border */
     border-radius: 10px; /* Rounded corners */
