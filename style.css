@@ -161,8 +161,23 @@ body {
     margin-right: 10px; /* Space between audio player and text */
 }
 
-.human {
+.human_left {
+    text-align: left; /* Left-align the text */
+    flex: none; /* Prevent text from growing */
+    width: 80%; /* Ensure it takes the full width */
+    background-color: rgba(173, 216, 230, 0.5); /* Light blue background */
+    border: 2px solid lightblue; /* Light blue border */
+    border-radius: 10px; /* Rounded corners */
+    padding: 10px; /* Inner spacing */
+}
+
+.human_right {
     text-align: right; /* Right-align the text */
     flex: none; /* Prevent text from growing */
     width: 80%; /* Ensure it takes the full width */
+    background-color: rgba(255, 165, 0, 0.5); /* Light orange background */
+    border: 2px solid orange; /* Orange border */
+    border-radius: 10px; /* Rounded corners */
+    padding: 10px; /* Inner spacing */
 }
+
