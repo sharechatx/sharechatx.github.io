@@ -29,8 +29,128 @@
   <script src="static/js/bulma-carousel.min.js"></script>
   <script src="static/js/bulma-slider.min.js"></script>
   <script src="static/js/index.js"></script>
+<style>
+	/* Case Card Container */
+	.case-container {
+		max-width: 900px;
+		margin: 0 auto 40px;
+	}
 
+	/* Case Card Styles */
+	.case-card {
+		background: #ffffff;
+		border-radius: 10px;
+		padding: 30px 20px; /* Increased padding */
+		margin-bottom: 30px;
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+		overflow: hidden; /* Prevent overflow */
+		position: relative; /* Ensure positioning is relative */
+	}
 
+	.case-card h2 {
+		font-size: 24px;
+		color: #007BFF;
+		margin-bottom: 15px;
+		border-bottom: 2px solid #90caf9;
+		padding-bottom: 5px;
+	}
+
+	/* Dialogue Case Styles */
+	.dialogue-case {
+		display: flex;
+		align-items: center;
+		justify-content: flex-start;
+		margin-bottom: 20px;
+		position: relative;
+		padding: 10px 0; /* Space between dialogues */
+	}
+
+	.dialogue-case.left {
+		justify-content: flex-start;
+	}
+
+	.dialogue-case.right {
+		justify-content: flex-end;
+	}
+
+	/* Text bubble styles */
+	.dialogue-case.left .text,
+	.dialogue-case.right .text {
+		background-color: #ffffff;
+		padding: 15px 20px;
+		border-radius: 15px;
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+		max-width: 70%;
+		line-height: 1.6;
+		margin-bottom: 10px;
+		position: relative;
+	}
+
+	.dialogue-case.left .text {
+		background-color: #e3f2fd;
+		border: 1px solid #90caf9;
+		margin-left: 15px; /* Prevent overlap with logo */
+	}
+
+	.dialogue-case.right .text {
+		background-color: #fff8e1;
+		border: 1px solid #ffcc80;
+		margin-right: 15px; /* Prevent overlap with logo */
+	}
+
+	/* Audio styles */
+	.dialogue-case audio {
+		outline: none;
+		margin-right: 15px;
+	}
+
+	/* Logo Styles */
+	.dialogue-case .logo {
+		width: 40px;
+		height: 40px;
+		border-radius: 50%;
+		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+		object-fit: cover;
+	}
+
+	.dialogue-case.left .logo {
+		margin-right: 15px;
+	}
+
+	.dialogue-case.right .logo {
+		margin-left: 15px;
+	}
+
+	/* Responsive Styles */
+	@media (max-width: 768px) {
+		.dialogue-case {
+			flex-direction: column;
+			align-items: flex-start;
+		}
+
+		.dialogue-case.right {
+			align-items: flex-end;
+		}
+
+		.dialogue-case audio {
+			margin: 0 0 10px 0;
+		}
+
+		.dialogue-case.left .text,
+		.dialogue-case.right .text {
+			max-width: 100%;
+			text-align: left;
+		}
+
+		.dialogue-case.left .logo,
+		.dialogue-case.right .logo {
+			margin: 0;
+			position: static;
+			width: 30px;
+			height: 30px;
+		}
+	}
+</style>
 </head>
 
 <body>
@@ -92,160 +212,552 @@ With the rapid development of large language models, researchers have created in
     <div class="hero-body">
         <div class="container">
             <h1 id="sharechatx" class="title is-3">A.Samples of ShareChatx dataset.</h1>
-		<h4 id="emotion" class="title is-4">A.1. ShareChatx-Emotion</h4>
-		    <table>
-			<tr>
-			    <td>
-				<div class="chat-box">
-				    <div class="chat-section">
-					    <div class="audio-container_left">
-					        <audio controls class="audio-player">
-					            <source src="audio1.mp3" type="audio/mpeg">
-					            Your browser does not support the audio element.
-					        </audio>
-					        <div class="human_left">Can you believe how peaceful it is here? The birds sound so lovely!</div>
-					    </div>
-					</div>
-					
-					<div class="chat-section">
-					    <div class="audio-container_right">
-					        <audio controls class="audio-player">
-					            <source src="audio2.mp3" type="audio/mpeg">
-					            Your browser does not support the audio element.
-					        </audio>
-					        <div class="human_right">I didn't expect to see so many birds together, it's like they're having a party!</div>
-					    </div>
+			<h4 id="emotion" class="title is-4">A.1. ShareChatx-Emotion</h4>
+				<div class="case-container">
+
+					<div class="case-card">
+						<h2>Case 1</h2>
+			
+						<div class="dialogue-case left">
+							<img class="logo" src="user_logo.png" alt="User Logo">
+							<audio controls>
+								<source src="audio1.mp3" type="audio/mp3">
+								Your browser does not support the audio element.
+							</audio>
+							<div class="text">
+								[Normal, Normal, Happy] <br> Can you believe how peaceful it is here? The birds sound so lovely! 
+							</div>
+						</div>
+			
+						<div class="dialogue-case right">
+							<div class="text">
+								[Low, Normal, Neutral] <br> Yeah, it definitely has a certain charm. 
+							</div>
+							<audio controls>
+								<source src="audio2.mp3" type="audio/mp3">
+								Your browser does not support the audio element.
+							</audio>
+							<img class="logo" src="system_logo.png" alt="System Logo">
+						</div>
+			
+						<div class="dialogue-case left">
+							<img class="logo" src="user_logo.png" alt="User Logo">
+							<audio controls>
+								<source src="audio3.mp3" type="audio/mp3">
+								Your browser does not support the audio element.
+							</audio>
+							<div class="text">
+								[High, Normal, Surprised] <br> I didn’t expect to see so many birds together, it’s like they're having a party! 
+							</div>
+						</div>
+			
+						<div class="dialogue-case right">
+							<div class="text">
+								[Normal, Normal, Happy] <br> It really feels like a joyful gathering, doesn’t it? 
+							</div>
+							<audio controls>
+								<source src="audio4.mp3" type="audio/mp3">
+								Your browser does not support the audio element.
+							</audio>
+							<img class="logo" src="system_logo.png" alt="System Logo">
+						</div>
+
+						<div class="dialogue-case left">
+							<img class="logo" src="user_logo.png" alt="User Logo">
+							<audio controls>
+								<source src="audio3.mp3" type="audio/mp3">
+								Your browser does not support the audio element.
+							</audio>
+							<div class="text">
+								[High, Normal, Neutral] <br> And they all seem to get along with each other nicely. 
+							</div>
+						</div>
+			
+						<div class="dialogue-case right">
+							<div class="text">
+								It’s kind of heartwarming and a little melancholic too, seeing them like this.
+							</div>
+							<audio controls>
+								<source src="audio4.mp3" type="audio/mp3">
+								Your browser does not support the audio element.
+							</audio>
+							<img class="logo" src="system_logo.png" alt="System Logo">
+						</div>
 					</div>
 
-				    <div class="chat-section">
-					<div class="audio-container">
-					    <audio controls class="audio-player">
-						<source src="audio3.mp3" type="audio/mpeg">
-						Your browser does not support the audio element.
-					    </audio>
-					    <div class="human_left">And they all seem to get along with each other nicely.</div>
+				</div>
+
+			<h4 id="audio" class="title is-4">A.2. ShareChatx-Audio</h4>
+				<div class="case-container">
+
+					<div class="case-card">
+						<h2>Case 1</h2>
+			
+						<div class="dialogue-case left">
+							<img class="logo" src="user_logo.png" alt="User Logo">
+							<audio controls>
+								<source src="audio1.mp3" type="audio/mp3">
+								Your browser does not support the audio element.
+							</audio>
+							<div class="text">
+								[Low, Normal, Happy] <br> Can you believe how nice the weather is today?
+							</div>
+						</div>
+			
+						<div class="dialogue-case right">
+							<div class="text">
+								[Normal, Normal, Happy] <br> I know, right? Perfect day for a ride!
+							</div>
+							<audio controls>
+								<source src="audio2.mp3" type="audio/mp3">
+								Your browser does not support the audio element.
+							</audio>
+							<img class="logo" src="system_logo.png" alt="System Logo">
+						</div>
+			
+						<div class="dialogue-case left">
+							<img class="logo" src="user_logo.png" alt="User Logo">
+							<audio controls>
+								<source src="audio3.mp3" type="audio/mp3">
+								Your browser does not support the audio element.
+							</audio>
+							<div class="text">
+								[Normal, Fast, Happy] <br> Exactly! I just got my bike tuned up.
+							</div>
+						</div>
+			
+						<div class="dialogue-case right">
+							<div class="text">
+								[High, Normal, Happy] <br> That’s awesome! We should go for a ride together
+							</div>
+							<audio controls>
+								<source src="audio4.mp3" type="audio/mp3">
+								Your browser does not support the audio element.
+							</audio>
+							<img class="logo" src="system_logo.png" alt="System Logo">
+						</div>
 					</div>
-				    </div>
-				    <div class="history">
-					<div class="bot">Yeah, it sounds like they are peacefully eating together, right?</div>
-					<div class="bot">Isn't it amazing how they coexist so peacefully?</div>
-					<div class="bot">Yes, the birds seem to be enjoying each other's company.</div>
-				    </div>
+
 				</div>
-			    </td>
-			    <td>
-				<div class="chat-box">
-				    <div class="chat-section">
-					<audio controls>
-					    <source src="audio4.mp3" type="audio/mpeg">
-					    Your browser does not support the audio element.
-					</audio>
-					<div class="human">Have you heard that new track with the male vocalist?</div>
-				    </div>
-				    <div class="chat-section">
-					<div class="bot">Yes! I love the way the slow tempo really sets a nostalgic tone.</div>
-				    </div>
-				    <div class="chat-section">
-					<audio controls>
-					    <source src="audio5.mp3" type="audio/mpeg">
-					    Your browser does not support the audio element.
-					</audio>
-					<div class="human">The lyrics are quite insightful, aren't they? They really stick with you.</div>
-				    </div>
-				    <div class="chat-section">
-					<div class="bot">Totally! It has this blend of soft yellow sad energy but with an electric guitar lead that's exotic.</div>
-				    </div>
-				    <div class="chat-section">
-					<audio controls>
-					    <source src="audio6.mp3" type="audio/mpeg">
-					    Your browser does not support the audio element.
-					</audio>
-					<div class="human">The overall mood seems a bit melancholic, doesn't it?</div>
-				    </div>
-				    <div class="history">
-					<div class="bot">Yeah, it definitely has that melancholic vibe, but it's also quite soothing.</div>
-					<div class="bot">Yeah, there's a touch of melancholy that makes you reflect on past experiences.</div>
-					<div class="bot">It feels uplifting in its own unique way.</div>
-				    </div>
+
+				<h4 id="music" class="title is-4">A.3. ShareChatx-Music</h4>
+				<div class="case-container">
+
+					<div class="case-card">
+						<h2>Case 1</h2>
+			
+						<div class="dialogue-case left">
+							<img class="logo" src="user_logo.png" alt="User Logo">
+							<audio controls>
+								<source src="audio1.mp3" type="audio/mp3">
+								Your browser does not support the audio element.
+							</audio>
+							<div class="text">
+								[Normal, Normal, Happy] <br> Man, I really enjoyed that jam earlier, didn’t you?
+							</div>
+						</div>
+			
+						<div class="dialogue-case right">
+							<div class="text">
+								[Normal, Normal, Happy] <br> Absolutely, the vibe of that instrumental was amazing!
+							</div>
+							<audio controls>
+								<source src="audio2.mp3" type="audio/mp3">
+								Your browser does not support the audio element.
+							</audio>
+							<img class="logo" src="system_logo.png" alt="System Logo">
+						</div>
+			
+						<div class="dialogue-case left">
+							<img class="logo" src="user_logo.png" alt="User Logo">
+							<audio controls>
+								<source src="audio3.mp3" type="audio/mp3">
+								Your browser does not support the audio element.
+							</audio>
+							<div class="text">
+								[Normal, Normal, Happy] <br> For sure! It felt like a live performance straight from the heart.
+							</div>
+						</div>
+			
+						<div class="dialogue-case right">
+							<div class="text">
+								[Normal, Normal, Happy] <br> Right? And the single instrument made it feel so personal.
+							</div>
+							<audio controls>
+								<source src="audio4.mp3" type="audio/mp3">
+								Your browser does not support the audio element.
+							</audio>
+							<img class="logo" src="system_logo.png" alt="System Logo">
+						</div>
+
+						<div class="dialogue-case left">
+							<img class="logo" src="user_logo.png" alt="User Logo">
+							<audio controls>
+								<source src="audio3.mp3" type="audio/mp3">
+								Your browser does not support the audio element.
+							</audio>
+							<div class="text">
+								[Normal, Normal, Happy] <br> The didgeridoo has such a unique sound; it takes you to another place.
+							</div>
+						</div>
+			
+						<div class="dialogue-case right">
+							<div class="text">
+								[Normal, Normal, Happy] <br> I love how it carried a Native vibe throughout the piece. Super raw!
+							</div>
+							<audio controls>
+								<source src="audio4.mp3" type="audio/mp3">
+								Your browser does not support the audio element.
+							</audio>
+							<img class="logo" src="system_logo.png" alt="System Logo">
+						</div>
+						
+						<div class="dialogue-case left">
+							<img class="logo" src="user_logo.png" alt="User Logo">
+							<audio controls>
+								<source src="audio3.mp3" type="audio/mp3">
+								Your browser does not support the audio element.
+							</audio>
+							<div class="text">
+								[Normal, Normal, Happy] <br> Such a tribal feel too; it connected everything really well.
+							</div>
+						</div>
+			
+						<div class="dialogue-case right">
+							<div class="text">
+								[Normal, Normal, Happy] <br> I could listen to that type of music all day, it just flows.
+							</div>
+							<audio controls>
+								<source src="audio4.mp3" type="audio/mp3">
+								Your browser does not support the audio element.
+							</audio>
+							<img class="logo" src="system_logo.png" alt="System Logo">
+						</div>
+						
+						<div class="dialogue-case left">
+							<img class="logo" src="user_logo.png" alt="User Logo">
+							<audio controls>
+								<source src="audio3.mp3" type="audio/mp3">
+								Your browser does not support the audio element.
+							</audio>
+							<div class="text">
+								[High, Fast, Neutral] <br> This piece had a really varying range of emotions too.
+							</div>
+						</div>
+			
+						<div class="dialogue-case right">
+							<div class="text">
+								[High, Fast, Neutral] <br> It really held up, I could feel the changes almost instantly!
+							</div>
+							<audio controls>
+								<source src="audio4.mp3" type="audio/mp3">
+								Your browser does not support the audio element.
+							</audio>
+							<img class="logo" src="system_logo.png" alt="System Logo">
+						</div>
+
+					</div>
+
 				</div>
-			    </td>
-			</tr>
-			<tr>
-			    <td>
-				<div class="chat-box">
-				    <div class="chat-section">
-					<audio controls>
-					    <source src="audio1.mp3" type="audio/mpeg">
-					    Your browser does not support the audio element.
-					</audio>
-					<div class="human">Can you believe how peaceful it is here? The birds sound so lovely!</div>
-				    </div>
-				    <div class="chat-section">
-					<div class="bot">Yeah, it definitely has a certain charm.</div>
-				    </div>
-				    <div class="chat-section">
-					<audio controls>
-					    <source src="audio2.mp3" type="audio/mpeg">
-					    Your browser does not support the audio element.
-					</audio>
-					<div class="human">I didn't expect to see so many birds together, it's like they're having a party!</div>
-				    </div>
-				    <div class="chat-section">
-					<div class="bot">It really feels like a joyful gathering, doesn't it?</div>
-				    </div>
-				    <div class="chat-section">
-					<audio controls>
-					    <source src="audio3.mp3" type="audio/mpeg">
-					    Your browser does not support the audio element.
-					</audio>
-					<div class="human">And they all seem to get along with each other nicely.</div>
-				    </div>
-				    <div class="history">
-					<div class="bot">Yeah, it sounds like they are peacefully eating together, right?</div>
-					<div class="bot">Isn't it amazing how they coexist so peacefully?</div>
-					<div class="bot">Yes, the birds seem to be enjoying each other's company.</div>
-				    </div>
+			
+			<h1 id="dailytalk1" class="title is-3">B.Output samples of OmniChat on Dailytalk dataset.</h1>
+				<div class="case-container">
+
+					<div class="case-card">
+						<h2>Case 1</h2>
+			
+						<div class="dialogue-case left">
+							<img class="logo" src="user_logo.png" alt="User Logo">
+							<audio controls>
+								<source src="audio1.mp3" type="audio/mp3">
+								Your browser does not support the audio element.
+							</audio>
+							<div class="text">
+								[neutral] <br> What are you hiding in your coat pocket?
+							</div>
+						</div>
+			
+						<div class="dialogue-case right">
+							<div class="text">
+								[neutral] <br> It's a camera.
+							</div>
+							<audio controls>
+								<source src="audio2.mp3" type="audio/mp3">
+								Your browser does not support the audio element.
+							</audio>
+							<img class="logo" src="system_logo.png" alt="System Logo">
+						</div>
+			
+						<div class="dialogue-case left">
+							<img class="logo" src="user_logo.png" alt="User Logo">
+							<audio controls>
+								<source src="audio3.mp3" type="audio/mp3">
+								Your browser does not support the audio element.
+							</audio>
+							<div class="text">
+								[neutral] <br> Umm you want to take pictures of the inside of your pocket?
+							</div>
+						</div>
+			
+						<div class="dialogue-case right">
+							<div class="text">
+								[neutral] <br> Not even funny, Billy. This is my new snapshot sticker camera.
+							</div>
+							<audio controls>
+								<source src="audio4.mp3" type="audio/mp3">
+								Your browser does not support the audio element.
+							</audio>
+							<img class="logo" src="system_logo.png" alt="System Logo">
+						</div>
+
+						<div class="dialogue-case left">
+							<img class="logo" src="user_logo.png" alt="User Logo">
+							<audio controls>
+								<source src="audio3.mp3" type="audio/mp3">
+								Your browser does not support the audio element.
+							</audio>
+							<div class="text">
+								[neutral] <br> What's that supposed to mean?
+							</div>
+						</div>
+			
+						<div class="dialogue-case right">
+							<div class="text">
+								[neutral] <br> It has stickers. You can stick stickers on the things through the camera. 
+							</div>
+							<audio controls>
+								<source src="audio4.mp3" type="audio/mp3">
+								Your browser does not support the audio element.
+							</audio>
+							<img class="logo" src="system_logo.png" alt="System Logo">
+						</div>
+					</div>
+
 				</div>
-			    </td>
-			    <td>
-				<div class="chat-box">
-				    <div class="chat-section">
-					<audio controls>
-					    <source src="audio4.mp3" type="audio/mpeg">
-					    Your browser does not support the audio element.
-					</audio>
-					<div class="human">Have you heard that new track with the male vocalist?</div>
-				    </div>
-				    <div class="chat-section">
-					<div class="bot">Yes! I love the way the slow tempo really sets a nostalgic tone.</div>
-				    </div>
-				    <div class="chat-section">
-					<audio controls>
-					    <source src="audio5.mp3" type="audio/mpeg">
-					    Your browser does not support the audio element.
-					</audio>
-					<div class="human">The lyrics are quite insightful, aren't they? They really stick with you.</div>
-				    </div>
-				    <div class="chat-section">
-					<div class="bot">Totally! It has this blend of soft yellow sad energy but with an electric guitar lead that's exotic.</div>
-				    </div>
-				    <div class="chat-section">
-					<audio controls>
-					    <source src="audio6.mp3" type="audio/mpeg">
-					    Your browser does not support the audio element.
-					</audio>
-					<div class="human">The overall mood seems a bit melancholic, doesn't it?</div>
-				    </div>
-				    <div class="history">
-					<div class="bot">Yeah, it definitely has that melancholic vibe, but it's also quite soothing.</div>
-					<div class="bot">Yeah, there's a touch of melancholy that makes you reflect on past experiences.</div>
-					<div class="bot">It feels uplifting in its own unique way.</div>
-				    </div>
+			<h1 id="emotion1" class="title is-3">C.Output samples of OmniChat on ShareChatx-Emotion dataset.</h1>
+				<div class="case-container">
+
+					<div class="case-card">
+						<h2>Case 1</h2>
+			
+						<div class="dialogue-case left">
+							<img class="logo" src="user_logo.png" alt="User Logo">
+							<audio controls>
+								<source src="audio1.mp3" type="audio/mp3">
+								Your browser does not support the audio element.
+							</audio>
+							<div class="text">
+								[Normal, Normal, Happy] <br> Can you believe how peaceful it is here? The birds sound so lovely! 
+							</div>
+						</div>
+			
+						<div class="dialogue-case right">
+							<div class="text">
+								[Low, Normal, Neutral] <br> Yeah, it definitely has a certain charm. 
+							</div>
+							<audio controls>
+								<source src="audio2.mp3" type="audio/mp3">
+								Your browser does not support the audio element.
+							</audio>
+							<img class="logo" src="system_logo.png" alt="System Logo">
+						</div>
+			
+						<div class="dialogue-case left">
+							<img class="logo" src="user_logo.png" alt="User Logo">
+							<audio controls>
+								<source src="audio3.mp3" type="audio/mp3">
+								Your browser does not support the audio element.
+							</audio>
+							<div class="text">
+								[High, Normal, Surprised] <br> I didn’t expect to see so many birds together, it’s like they're having a party! 
+							</div>
+						</div>
+			
+						<div class="dialogue-case right">
+							<div class="text">
+								[Normal, Normal, Happy] <br> It really feels like a joyful gathering, doesn’t it? 
+							</div>
+							<audio controls>
+								<source src="audio4.mp3" type="audio/mp3">
+								Your browser does not support the audio element.
+							</audio>
+							<img class="logo" src="system_logo.png" alt="System Logo">
+						</div>
+
+						<div class="dialogue-case left">
+							<img class="logo" src="user_logo.png" alt="User Logo">
+							<audio controls>
+								<source src="audio3.mp3" type="audio/mp3">
+								Your browser does not support the audio element.
+							</audio>
+							<div class="text">
+								[High, Normal, Neutral] <br> And they all seem to get along with each other nicely. 
+							</div>
+						</div>
+			
+						<div class="dialogue-case right">
+							<div class="text">
+								It’s kind of heartwarming and a little melancholic too, seeing them like this.
+							</div>
+							<audio controls>
+								<source src="audio4.mp3" type="audio/mp3">
+								Your browser does not support the audio element.
+							</audio>
+							<img class="logo" src="system_logo.png" alt="System Logo">
+						</div>
+					</div>
+
 				</div>
-			    </td>
-			</tr>
-		    </table>
-        </div>
+			<h1 id="audio1" class="title is-3">D.Output samples of OmniChat on ShareChatx-Audio dataset.</h1>
+				<div class="case-container">
+
+					<div class="case-card">
+						<h2>Case 1</h2>
+			
+						<div class="dialogue-case left">
+							<img class="logo" src="user_logo.png" alt="User Logo">
+							<audio controls>
+								<source src="audio1.mp3" type="audio/mp3">
+								Your browser does not support the audio element.
+							</audio>
+							<div class="text">
+								[Normal, Normal, Happy] <br> Can you believe how peaceful it is here? The birds sound so lovely! 
+							</div>
+						</div>
+			
+						<div class="dialogue-case right">
+							<div class="text">
+								[Low, Normal, Neutral] <br> Yeah, it definitely has a certain charm. 
+							</div>
+							<audio controls>
+								<source src="audio2.mp3" type="audio/mp3">
+								Your browser does not support the audio element.
+							</audio>
+							<img class="logo" src="system_logo.png" alt="System Logo">
+						</div>
+			
+						<div class="dialogue-case left">
+							<img class="logo" src="user_logo.png" alt="User Logo">
+							<audio controls>
+								<source src="audio3.mp3" type="audio/mp3">
+								Your browser does not support the audio element.
+							</audio>
+							<div class="text">
+								[High, Normal, Surprised] <br> I didn’t expect to see so many birds together, it’s like they're having a party! 
+							</div>
+						</div>
+			
+						<div class="dialogue-case right">
+							<div class="text">
+								[Normal, Normal, Happy] <br> It really feels like a joyful gathering, doesn’t it? 
+							</div>
+							<audio controls>
+								<source src="audio4.mp3" type="audio/mp3">
+								Your browser does not support the audio element.
+							</audio>
+							<img class="logo" src="system_logo.png" alt="System Logo">
+						</div>
+
+						<div class="dialogue-case left">
+							<img class="logo" src="user_logo.png" alt="User Logo">
+							<audio controls>
+								<source src="audio3.mp3" type="audio/mp3">
+								Your browser does not support the audio element.
+							</audio>
+							<div class="text">
+								[High, Normal, Neutral] <br> And they all seem to get along with each other nicely. 
+							</div>
+						</div>
+			
+						<div class="dialogue-case right">
+							<div class="text">
+								It’s kind of heartwarming and a little melancholic too, seeing them like this.
+							</div>
+							<audio controls>
+								<source src="audio4.mp3" type="audio/mp3">
+								Your browser does not support the audio element.
+							</audio>
+							<img class="logo" src="system_logo.png" alt="System Logo">
+						</div>
+					</div>
+
+				</div>
+			<h1 id="music1" class="title is-3">E.Output samples of OmniChat on ShareChatx-Music dataset.</h1>
+				<div class="case-container">
+
+					<div class="case-card">
+						<h2>Case 1</h2>
+			
+						<div class="dialogue-case left">
+							<img class="logo" src="user_logo.png" alt="User Logo">
+							<audio controls>
+								<source src="audio1.mp3" type="audio/mp3">
+								Your browser does not support the audio element.
+							</audio>
+							<div class="text">
+								[Normal, Normal, Happy] <br> Can you believe how peaceful it is here? The birds sound so lovely! 
+							</div>
+						</div>
+			
+						<div class="dialogue-case right">
+							<div class="text">
+								[Low, Normal, Neutral] <br> Yeah, it definitely has a certain charm. 
+							</div>
+							<audio controls>
+								<source src="audio2.mp3" type="audio/mp3">
+								Your browser does not support the audio element.
+							</audio>
+							<img class="logo" src="system_logo.png" alt="System Logo">
+						</div>
+			
+						<div class="dialogue-case left">
+							<img class="logo" src="user_logo.png" alt="User Logo">
+							<audio controls>
+								<source src="audio3.mp3" type="audio/mp3">
+								Your browser does not support the audio element.
+							</audio>
+							<div class="text">
+								[High, Normal, Surprised] <br> I didn’t expect to see so many birds together, it’s like they're having a party! 
+							</div>
+						</div>
+			
+						<div class="dialogue-case right">
+							<div class="text">
+								[Normal, Normal, Happy] <br> It really feels like a joyful gathering, doesn’t it? 
+							</div>
+							<audio controls>
+								<source src="audio4.mp3" type="audio/mp3">
+								Your browser does not support the audio element.
+							</audio>
+							<img class="logo" src="system_logo.png" alt="System Logo">
+						</div>
+
+						<div class="dialogue-case left">
+							<img class="logo" src="user_logo.png" alt="User Logo">
+							<audio controls>
+								<source src="audio3.mp3" type="audio/mp3">
+								Your browser does not support the audio element.
+							</audio>
+							<div class="text">
+								[High, Normal, Neutral] <br> And they all seem to get along with each other nicely. 
+							</div>
+						</div>
+			
+						<div class="dialogue-case right">
+							<div class="text">
+								It’s kind of heartwarming and a little melancholic too, seeing them like this.
+							</div>
+							<audio controls>
+								<source src="audio4.mp3" type="audio/mp3">
+								Your browser does not support the audio element.
+							</audio>
+							<img class="logo" src="system_logo.png" alt="System Logo">
+						</div>
+					</div>
+
+				</div>
+		
+		</div>
     </div>
 </section>
 
